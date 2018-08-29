@@ -1,21 +1,24 @@
 <?php
 
 use Phalcon\Mvc\Controller;
-use Phalcon\Mvc\Model\Query;
 
 class ControllerBase extends Controller
 {
-    protected function output($code = 200, $json)
+    protected function output($code, $data)
     {
-        if (!isset($json)) {
+        if (!isset($data)) {
             die(json_encode(["code" => $code], JSON_UNESCAPED_UNICODE));
         }
-        die(json_encode(["code" => $code, "data" => $json], JSON_UNESCAPED_UNICODE));
+        die(json_encode(["code" => $code, "data" => $data], JSON_UNESCAPED_UNICODE));
     }
 
-    protected function query($sql)
+    protected function query($sql, $condition = [])
     {
-        $result = new Query($sql, $this->getDI());
-        return $result->execute();
+        if (!empty($condition)) {
+            $result = $this->modelsManager->executeQuery($sql, $condition);
+        } else {
+            $result = $this->modelsManager->executeQuery($sql);
+        }
+        return $result;
     }
 }
