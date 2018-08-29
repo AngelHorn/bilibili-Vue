@@ -7,9 +7,14 @@ $router = $di->getRouter();
 //    "/products/edit/{id}",
 //    "Products::edit"
 //);
+//$blog->add(
+//    "/edit/{id}",
+//    [
+//        "action" => "edit",
+//    ]
+//);
 
-$router->add('/videos/{id}',"get");
-$router->handle("/videos/get/{id}");
+//$router->handle("/videos/get/{id}");
 
 
 $router->handle();
